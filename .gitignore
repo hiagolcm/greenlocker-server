@@ -1,0 +1,7 @@
+*.log
+
+# Dependency directory
+node_modules
+
+# Built files
+dist/**/*
