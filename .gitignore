@@ -1,7 +1,6 @@
-*.log
-
-# Dependency directory
-node_modules
-
-# Built files
-dist/**/*
+.idea/
+.vscode/
+node_modules/
+build/
+tmp/
+temp/
