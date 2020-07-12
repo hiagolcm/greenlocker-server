@@ -2,10 +2,12 @@ import { Router } from 'express';
 import { getRepository } from 'typeorm';
 import User from '../models/User';
 import CreateUserService from '../services/CreateUserService';
+import ChangeUserPasswordService from '../services/ChangeUserPasswordService';
+import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 
-const userRouters = Router();
+const userRoutes = Router();
 
-userRouters.get('/', async (_, res) => {
+userRoutes.get('/', async (_, res) => {
   const usersRepository = getRepository(User);
 
   const users = await usersRepository.find();
@@ -13,10 +15,10 @@ userRouters.get('/', async (_, res) => {
   res.json({ users });
 });
 
-userRouters.post('/', async (req, res) => {
-  const createUserService = new CreateUserService();
-
+userRoutes.post('/', async (req, res) => {
   const { nickname, email, password } = req.body;
+
+  const createUserService = new CreateUserService();
 
   const user = await createUserService.exec({
     nickname,
@@ -27,4 +29,20 @@ userRouters.post('/', async (req, res) => {
   res.json({ user });
 });
 
-export default userRouters;
+userRoutes.patch('/password', ensureAuthenticated, async (req, res) => {
+  const { currentPassword, newPassword } = req.body;
+
+  const userId = req.user.id;
+
+  const changeUserPasswordService = new ChangeUserPasswordService();
+
+  const user = await changeUserPasswordService.exec({
+    userId,
+    currentPassword,
+    newPassword,
+  });
+
+  res.json({ user });
+});
+
+export default userRoutes;

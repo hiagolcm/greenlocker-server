@@ -1,8 +1,10 @@
 import { Router } from 'express';
-import userRouters from './users.routes';
+import userRoutes from './users.routes';
+import sessionsRoutes from './sessions.routes';
 
 const routes = Router();
 
-routes.use('/users', userRouters);
+routes.use('/users', userRoutes);
+routes.use('/sessions', sessionsRoutes);
 
 export default routes;

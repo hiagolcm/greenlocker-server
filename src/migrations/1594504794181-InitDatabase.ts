@@ -5,5 +5,7 @@ export default class InitDatabase1594504794181 implements MigrationInterface {
     await queryRunner.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
   }
 
-  public async down(): Promise<void> {}
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query('DROP EXTENSION IF EXISTS "uuid-ossp"');
+  }
 }
