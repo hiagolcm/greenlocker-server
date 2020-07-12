@@ -1,7 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
+import { getRepository } from 'typeorm';
 import { verify } from 'jsonwebtoken';
 import AppError from '../models/AppError';
 import authConfig from '../configs/authConfig';
+import User from '../models/User';
 
 interface JWTPayload {
   iat: string;
@@ -25,6 +27,13 @@ const ensureAuthenticated = async (
 
   try {
     const decoded = verify(token, authConfig.secret) as JWTPayload;
+
+    const usersRepository = getRepository(User);
+    const user = await usersRepository.findOne({ id: decoded.sub });
+
+    if (!user) {
+      throw new AppError(400, 'User not found');
+    }
 
     req.user = {
       id: decoded.sub,
