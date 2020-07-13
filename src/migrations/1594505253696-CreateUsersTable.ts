@@ -3,6 +3,8 @@ import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 export default class CreateUsersTable1594505253696
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query("CREATE TYPE mood AS ENUM ('ADMIN', 'COMMON');");
+
     await queryRunner.createTable(
       new Table({
         name: 'users',
@@ -39,9 +41,7 @@ export default class CreateUsersTable1594505253696
           },
           {
             name: 'role',
-            type: 'varchar',
-            enum: ['ADMIN', 'COMMON'],
-            enumName: 'role',
+            type: 'int',
           },
           {
             name: 'created_at',

@@ -3,13 +3,13 @@ import { getRepository } from 'typeorm';
 import { verify } from 'jsonwebtoken';
 import AppError from '../models/AppError';
 import authConfig from '../configs/authConfig';
-import User from '../models/User';
+import User, { Role } from '../models/User';
 
 interface JWTPayload {
   iat: string;
   exp: string;
   sub: string;
-  role: 'ADMIN' | 'COMMON';
+  role: Role;
 }
 
 const ensureAuthenticated = async (

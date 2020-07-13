@@ -82,7 +82,7 @@ userRoutes.patch(
 
     const user = await blockUserService.exec({ userId, blocked: block });
 
-    res.status(204).json({ user });
+    res.json({ user });
   },
 );
 

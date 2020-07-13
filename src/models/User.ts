@@ -6,6 +6,11 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
+export enum Role {
+  COMMON,
+  ADMIN,
+}
+
 @Entity('users')
 class User {
   @PrimaryGeneratedColumn('uuid')
@@ -20,14 +25,14 @@ class User {
   @Column()
   password: string;
 
-  @Column({ nullable: true })
+  @Column()
   avatar?: string;
 
-  @Column({ default: false })
+  @Column()
   blocked: boolean;
 
-  @Column({ default: 'COMMON' })
-  role: 'ADMIN' | 'COMMON';
+  @Column()
+  role: Role;
 
   @CreateDateColumn()
   created_at: Date;

@@ -1,6 +1,6 @@
 import { getRepository } from 'typeorm';
 import bcrypt from 'bcrypt';
-import User from '../models/User';
+import User, { Role } from '../models/User';
 import AppError from '../models/AppError';
 
 interface Request {
@@ -40,6 +40,7 @@ class CreateUserService {
       nickname,
       email,
       password: encryptedPassword,
+      role: Role.COMMON,
     });
 
     await usersRepository.save(user);

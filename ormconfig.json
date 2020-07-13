@@ -5,7 +5,7 @@
    "username": "postgres",
    "password": "docker",
    "database": "greenlocker",
-   "synchronize": true,
+   "synchronize": false,
    "logging": false,
    "entities": [
       "src/models/**/*.ts"
